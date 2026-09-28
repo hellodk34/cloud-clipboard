@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DK 的云剪贴板 · Cloud Clipboard</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+      <rect x="8" y="2" width="8" height="4" rx="1"/>
+      <path d="M9 12h6M9 16h4"/>
+    </svg>
+    <span>DK 的云剪贴板</span>
+  </div>
+  <div class="sub" id="subtitle">跨设备复制粘贴 · 文本 / 图片 / 文件</div>
+</header>
+
+<main class="container">
+
+  <!-- 创建视图 -->
+  <div id="createView" class="view">
+    <section class="card">
+      <div class="card-head">
+        <h2>文本</h2>
+        <span id="charCount" class="muted">0 字</span>
+      </div>
+      <textarea id="textArea" spellcheck="false"
+        placeholder="在这里输入或粘贴文本，点击「创建剪贴板」生成链接，到另一台设备打开即可读取。&#10;&#10;· 长度不限&#10;· 直接粘贴图片（图片数据本身或图片文件均可）、文件均可加入待上传列表"></textarea>
+      <div class="hint">文本长度不限 · Ctrl / ⌘ + V 粘贴图片 / 文件</div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>文件 / 图片</h2>
+        <div class="muted">单个文件 ≤ 100MB</div>
+      </div>
+      <div id="dropZone" class="dropzone">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 16V4m0 0l-4 4m4-4l4 4"/>
+          <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+        </svg>
+        <div class="dz-text">拖拽文件到这里，或点击选择，或系统文件浏览器复制文件后在本页面粘贴</div>
+        <div class="muted small">支持任意文件类型 · 创建时一并上传</div>
+        <input type="file" id="fileInput" multiple hidden>
+      </div>
+      <ul id="pendingList" class="file-list"></ul>
+    </section>
+
+    <div class="create-bar">
+      <button class="btn primary big" id="btnCreate">创建剪贴板</button>
+    </div>
+
+    <section class="card result" id="resultBox" hidden>
+      <div class="card-head"><h2>创建成功</h2></div>
+      <div class="result-row">
+        <a class="result-url" id="resultUrl" target="_blank" rel="noopener"></a>
+        <button class="btn primary" id="btnCopyLink">复制链接</button>
+      </div>
+      <div class="hint">在另一台设备打开该链接即可读取内容；内容 24 小时后自动删除。</div>
+    </section>
+  </div>
+
+  <!-- 查看视图 -->
+  <div id="viewView" class="view" hidden>
+    <section class="card">
+      <div class="card-head">
+        <h2>文本</h2>
+        <button class="btn" id="btnCopyText">复制</button>
+      </div>
+      <pre id="viewText"></pre>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>文件 / 图片</h2>
+        <div class="muted" id="viewFileCount"></div>
+      </div>
+      <ul id="viewFileList" class="file-list"></ul>
+    </section>
+
+    <div class="create-bar">
+      <button class="btn danger big" id="btnClear">清空</button>
+    </div>
+  </div>
+
+  <!-- 不存在 / 已过期 -->
+  <div id="notFound" class="view" hidden>
+    <div class="card empty-state">
+      <div class="big-text">链接不存在或已过期</div>
+      <a class="btn primary" href="/">去创建新的剪贴板</a>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; DK 的云剪贴板 | 20260921 - 至今, by <a href="https://hellodk.cn" target="_blank" rel="noopener">hellodk.cn</a></footer>
+
+</main>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
