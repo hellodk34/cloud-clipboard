@@ -266,21 +266,21 @@ textarea:focus {
 
 .btn.big { padding: 12px 26px; font-size: 15px; }
 
-.result-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.result-row { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
 
 .result-url {
   flex: 1;
   min-width: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 14px;
+  line-height: 1.6;
   color: var(--accent);
   background: #f6f8ff;
   border: 1px solid var(--border);
   padding: 9px 12px;
   border-radius: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  word-break: break-all;
   text-decoration: none;
 }
 
